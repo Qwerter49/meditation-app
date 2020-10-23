@@ -3,14 +3,12 @@
 Ohm Logger is a meditation scheduler. Because whats more meditative than procedurally blocking out your day?
 
 # Table Of Contents 
-- [Description](https://github.com/ktrahan2/spacey-bois-frontend/blob/main/README.md#description)
-- [Example Code](https://github.com/ktrahan2/spacey-bois-frontend/blob/main/README.md#example-code)
-- [Technology Used](https://github.com/ktrahan2/spacey-bois-frontend/blob/main/README.md#technology-used)
-- [Setting up for the Application](https://github.com/ktrahan2/spacey-bois-frontend/blob/main/README.md#setting-up-for-the-application)
-- [Main Features](https://github.com/ktrahan2/spacey-bois-frontend/blob/main/README.md#main-features)
-- [Features in Progress](https://github.com/ktrahan2/spacey-bois-frontend/blob/main/README.md#features-in-progress)
-- [Contact Information](https://github.com/ktrahan2/spacey-bois-frontend/blob/main/README.md#contact-information)
-- [Link to Backend Repo](https://github.com/ktrahan2/spacey-bois-frontend/blob/main/README.md#link-to-backend-repo)
+- [Description](https://github.com/Qwerter49/meditation-app/tree/master#description)
+- [Technology Used](https://github.com/Qwerter49/meditation-app/tree/master#technology-used)
+- [Setting up for the Application](https://github.com/Qwerter49/meditation-app/tree/master#setting-up-for-the-application)
+- [Main Features](https://github.com/Qwerter49/meditation-app/tree/master#main-features)
+- [Features in Progress](https://github.com/Qwerter49/meditation-app/tree/master#features-in-progress)
+- [Contact Information](https://github.com/Qwerter49/meditation-app/tree/master#contact-information)
 
 ## Description
 

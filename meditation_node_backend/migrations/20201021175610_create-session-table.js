@@ -1,18 +1,10 @@
 exports.up = async function(knex) {
-    await knex.schema.createTable("session", table => {
-        table.integer("id")
+    await knex.schema.createTable("sessions", table => {
+        table.increments()
         table.integer("seconds")
-    })
-
-    await knex.schema.table("user", table => {
-        table.integer("session_id").references("id").inTable("session")
     })
 };
 
 exports.down = async function(knex) {
-    await knex.schema.table("user", table => {
-        table.dropColumn("session_id")
-    })
-
-    await knex.schema.dropTableIfExists("session")
-};
+    await knex.schema.dropTableIfExists("sessions")
+}

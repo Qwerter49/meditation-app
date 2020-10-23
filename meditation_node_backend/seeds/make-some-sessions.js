@@ -1,29 +1,50 @@
 exports.seed = async function(knex) {
-  await knex("session").del()
-  await knex("user").del()
+  await knex("users-sessions").del()
+  await knex("sessions").del()
+  await knex("users").del()
 
-  await knex("user").insert([{
+  const jay = await knex("users").insert({
     id: 1,
-    username: "jo",
+    username: "jay",
     password_hash: "jayoliver",
-    session_id: 1
-  },{
-    id: 2,
-    username: "co",
-    password_hash: "chuckoliver",
-    session_id: 2
-  }])
+  }).returning("id").then(ids => ids[0])
 
-  await knex("session").insert([{
+  const chuck = await knex("users").insert({
+    id: 2,
+    username: "chuck",
+    password_hash: "jayoliver",
+  }).returning("id").then(ids => ids[0])
+
+
+  const session1 = await knex("sessions").insert({
     id: 1,
     seconds: 45
-  },
-  {
+  }).returning("id").then(ids => ids[0])
+
+  const session2 = await knex("sessions").insert({
     id: 2,
     seconds: 15
-  },
-  {
+  }).returning("id").then(ids => ids[0])
+
+  const session3 = await knex("sessions").insert({
     id: 3,
     seconds: 30
-  }])
+  }).returning("id").then(ids => ids[0])
+
+
+await knex("users-sessions").insert([
+  {
+    user_id: jay,
+    session_id: session1
+  },
+  {
+    user_id: jay,
+    session_id: session2
+  },
+  {
+    user_id: chuck,
+    session_id: session3
+  }
+])
+return true
 };

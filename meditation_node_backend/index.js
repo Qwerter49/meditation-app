@@ -11,23 +11,6 @@ const database = knex(config)
 const { Model } = require("objection")
 Model.knex(database)
 
-class User extends Model {
-    static tableName = "user" 
-}
-
-class Session extends Model {
-    static tableName = "session" 
-    static relationMappings = {
-        sessions: {
-            relation: Model.HasManyRelation,
-            model: Session,
-            join: {
-                from: "session.id",
-                to: "user.session_id",
-            }
-        }
-    }
-}
 
 const bodyParser = require("body-parser")
 const bcrypt = require("bcrypt")
@@ -37,11 +20,97 @@ const { response, json, request } = require('express')
 
 app.use(bodyParser.json())
 
+
+class Session extends Model {
+    static get tableName(){
+        return 'sessions'
+    }
+}
+//     static relationMappings = {
+//         users: {
+//             relation: Model.ManyToManyRelation,
+//             modelClass: User,
+//             join: {
+//                 from: "sessions.id",
+//                 through: {
+//                     from: 'users_sessions.sessionId',
+//                     to: 'users_sessions.userId'
+//                 },
+//                 to: 'users.id'
+//             }
+//         }
+//     }
+// }
+
+class User extends Model {
+    static get tableName(){
+        return "users"
+    }
+    static relationMappings = {
+        sessions: {
+            relation: Model.ManyToManyRelation,
+            modelClass: Session,
+            join: {
+                from: 'users.id',
+                through: {
+                    from: 'users-sessions.user_id',
+                    to: 'users-sessions.session_id'
+                },
+                to: 'sessions.id'
+            }
+        }
+    };
+}
+
+class Users_sessions extends Model {
+    static get tableName(){
+        return 'users-sessions'
+    }
+
+    static relationMappings = {
+        user: {
+            relation: Model.BelongsToOneRelation,
+            modelClass: User,
+            join: {
+                from: 'users-sessions.user_id',
+                to: 'user.id'
+            }
+        }
+    }
+    static relationMappings = {
+        session: {
+            relation: Model.BelongsToOneRelation,
+            modelClass: Session,
+            join: {
+                from: 'users-sessions.session_id',
+                to: 'session.id'
+            }
+        }
+    }
+}
+
 app.get("/users", (request, response) => {
-    User.query()
-        // .withGraphFetched("users")
+    User.query().withGraphFetched('sessions')
         .then(users => {
             response.json({ users })
+        }).catch(error => {
+            console.error(error.message)
+        })
+})
+
+app.get("/users-sessions", (request, response) => {
+    Users_sessions.query()
+        .then(usersSessions => {
+            response.json({ usersSessions })
+        }).catch(error => {
+            console.error(error.message)
+        })
+})
+
+app.get("/sessions", (request, response) => {
+    Session.query()
+        .then(sessions => {
+            response.json({ sessions })
         }).catch(error => {
             console.error(error.message)
         })
@@ -65,6 +134,7 @@ app.post('/users', (request, response) => {
             response.json({ error: error.message })
         })
 })
+
 
 //route to login as an existing user
 app.post("/login", (request, response) => {
